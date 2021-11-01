@@ -50,4 +50,3 @@ print(cm_rl)
 cm_orig <- cm$confusion_matrix
 print(cm_orig)
 }
-\keyword{internal}

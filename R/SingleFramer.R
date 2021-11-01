@@ -2,7 +2,6 @@
 #' @description a confusion matrix object for binary classification machine learning problems.
 #' @param train_labels the classification labels from the training set
 #' @param truth_labels the testing set ground truth labels for comparison
-#' @keywords internal
 #' @return A list containing the outputs highlighted hereunder:
 #' \itemize{
 #' \item{\strong{"confusion_matrix"}}{ a confusion matrix list item with all the associated confusion matrix statistics}

@@ -57,4 +57,3 @@ cm$record_level_cm #Primed for storage in a database table
 # List confusion matrix
 cm$confusion_matrix
 }
-\keyword{internal}

@@ -14,7 +14,6 @@
 #' @param cm_stat_size the cex size of the statistics box label
 #' @param cm_stat_lbl_size the cex size of the label in the statistics box
 #' @return returns a visual of a Confusion Matrix output
-#' @keywords internal
 #' @importFrom caret confusionMatrix createDataPartition
 #' @importFrom graphics par rect text layout title plot
 #' @examples

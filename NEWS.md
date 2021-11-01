@@ -8,4 +8,8 @@ Initial build contains methods for converting multi and binary class confusion m
 ## 1.0.2 - Added Dummy Encoding Functionality
 Added dummy encoding functionality to the package. This allows for dummy encoding over numerous columns.
 
+## 1.0.3 - Ammended issue with manual not being published for package
+Amended the `keywords: internal` statement to help with the manual not being created.
+
+
 

@@ -1,9 +1,10 @@
 Package: ConfusionTableR
 Type: Package
 Title: Confusion Matrix Toolset
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: c(
-          person("Gary", "Hutson", , "hutsons-hacks@outlook.com", c("aut", "cre"), comment = c(ORCID="0000-0003-3534-6143"))
+          person("Gary", "Hutson", , "hutsons-hacks@outlook.com", 
+          c("aut", "cre"), comment = c(ORCID="0000-0003-3534-6143"))
           )
 Maintainer: Gary Hutson <hutsons-hacks@outlook.com>
 Description: Takes the outputs of a 'caret' confusion matrix and allows for the quick conversion of these list items to lists.
@@ -14,15 +15,14 @@ Description: Takes the outputs of a 'caret' confusion matrix and allows for the 
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.1.1
-Imports: dplyr, tidyr, magrittr, caret, mlbench, lattice, scales,
-        ggplot2, e1071, randomForest, purrr, furrr
-Suggests: knitr, rmarkdown
+Imports: dplyr, tidyr, magrittr, caret, purrr, furrr
+Suggests: knitr, rmarkdown, e1071, randomForest, scales, mlbench
 VignetteBuilder: knitr
 NeedsCompilation: no
 Repository: CRAN
 Collate: 'MultiFramer.R' 'SingleFramer.R' 'binaryVisualiseR.R'
         'dummycoder.R' 'globals.R'
 Language: en-US
-Packaged: 2021-10-07 20:20:55 UTC; garyh
+Packaged: 2021-11-01 11:37:54 UTC; garyh
 Author: Gary Hutson [aut, cre] (<https://orcid.org/0000-0003-3534-6143>)
-Date/Publication: 2021-10-07 20:40:08 UTC
+Date/Publication: 2021-11-01 15:20:05 UTC

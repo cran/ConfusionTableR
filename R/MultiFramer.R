@@ -9,7 +9,6 @@
 #' \item{\strong{"cm_tbl"}}{ a confusion matrix raw table of the values in the matrix}
 #' \item{\strong{"last_run"}}{datetime object storing when the function was run}
 #' }
-#' @keywords internal
 #' @importFrom caret confusionMatrix createDataPartition
 #' @importFrom dplyr select
 #' @examples

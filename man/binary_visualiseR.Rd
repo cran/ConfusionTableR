@@ -81,4 +81,3 @@ predicted <- cbind(data.frame(class_preds=preds), test)
 ConfusionTableR::binary_visualiseR(predicted$class_preds,
 predicted$Class, custom_title="Breast Cancer prediction")
 }
-\keyword{internal}
