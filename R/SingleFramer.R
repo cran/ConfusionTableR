@@ -2,6 +2,7 @@
 #' @description a confusion matrix object for binary classification machine learning problems.
 #' @param train_labels the classification labels from the training set
 #' @param truth_labels the testing set ground truth labels for comparison
+#' @param ... function forwarding for additional `caret` confusion matrix parameters to be passed such as mode="everything" and positive="class label"
 #' @return A list containing the outputs highlighted hereunder:
 #' \itemize{
 #' \item{\strong{"confusion_matrix"}}{ a confusion matrix list item with all the associated confusion matrix statistics}
@@ -38,8 +39,8 @@
 #' predicted <- cbind(data.frame(class_preds=preds), test)
 #'
 #' #ConfusionTableR to produce record level output
-#'
 #' cm <- ConfusionTableR::binary_class_cm(predicted$class_preds,predicted$Class)
+#' # Other modes here are mode="prec_recall", mode="sens_spec" and mode="everything"
 #' # Record level output
 #' cm$record_level_cm #Primed for storage in a database table
 #' # List confusion matrix
@@ -47,9 +48,10 @@
 #' @export
 
 
-binary_class_cm <- function(train_labels, truth_labels){
-  #Instantiate the confusion matrix object
-  cm <- caret::confusionMatrix(train_labels, truth_labels)
+binary_class_cm <- function(train_labels, truth_labels, ...){
+  message("[INFO] Building a record level confusion matrix to store in dataset")
+  #Instantiate the confusion matrix obj...
+  cm <- caret::confusionMatrix(train_labels, truth_labels, ...)
   #Extract the list element
   cm_table <- data.frame(cm$table)
   #Paste the predicted label on
@@ -61,9 +63,9 @@ binary_class_cm <- function(train_labels, truth_labels){
   cm_df$cm_ts <- Sys.time()
   results_list <- list("confusion_matrix" = cm,
                        "record_level_cm" = data.frame(cm_df),
-                       "cm_tbl" = cm_table,
-                       "last_run"=Sys.time())
+                       "cm_tbl" = cm_table,"last_run"=Sys.time())
 
+  message("[INFO] Build finished and to expose record level cm use the record_level_cm list item")
 
   return(results_list)
 }

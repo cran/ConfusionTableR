@@ -50,7 +50,8 @@ print(cm)
 ## ----using_multi_function, warning=FALSE, error=FALSE, message=FALSE, fig.height= 5, fig.width=7----
 # Implementing function to collapse data
 library(ConfusionTableR)
-mc_df <- ConfusionTableR::multi_class_cm(predictions$train_preds, predictions$test.Species)
+mc_df <- ConfusionTableR::multi_class_cm(predictions$train_preds, predictions$test.Species,
+                                         mode="everything")
 # Access the reduced data for storage in databases
 print(mc_df$record_level_cm)
 glimpse(mc_df$record_level_cm)

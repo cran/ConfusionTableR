@@ -16,7 +16,8 @@ binary_visualiseR(
   text_col = "black",
   round_dig = 2,
   cm_stat_size = 1.4,
-  cm_stat_lbl_size = 1.5
+  cm_stat_lbl_size = 1.5,
+  ...
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ binary_visualiseR(
 \item{cm_stat_size}{the cex size of the statistics box label}
 
 \item{cm_stat_lbl_size}{the cex size of the label in the statistics box}
+
+\item{...}{function forwarding to the confusion matrix object to pass additional args, such as positive = "Class label"}
 }
 \value{
 returns a visual of a Confusion Matrix output
@@ -78,6 +81,5 @@ rf_fit <- caret::train(Class ~ ., data=train, method="rf")
 preds <- predict(rf_fit, newdata=test, type="raw")
 predicted <- cbind(data.frame(class_preds=preds), test)
 # Create the visual
-ConfusionTableR::binary_visualiseR(predicted$class_preds,
-predicted$Class, custom_title="Breast Cancer prediction")
+ConfusionTableR::binary_visualiseR(predicted$class_preds, predicted$Class)
 }

@@ -4,12 +4,14 @@
 \alias{multi_class_cm}
 \title{Multiple Confusion Matrix data frame}
 \usage{
-multi_class_cm(train_labels, truth_labels)
+multi_class_cm(train_labels, truth_labels, ...)
 }
 \arguments{
 \item{train_labels}{the classification labels from the training set}
 
 \item{truth_labels}{the testing set ground truth labels for comparison}
+
+\item{...}{function forwarding for passing mode and other parameters to `caret` confusionMatrix}
 }
 \value{
 A list containing the outputs highlighted hereunder:
@@ -21,7 +23,7 @@ A list containing the outputs highlighted hereunder:
 }
 }
 \description{
-a confusion matrix object for multi classification machine learning problems.
+a confusion matrix object for multiple outcome classification machine learning problems.
 }
 \examples{
 # Get the IRIS data as this is a famous multi-classification problem

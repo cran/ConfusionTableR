@@ -30,45 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-<style type="text/css">
-a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
-a.anchor-section::before {content: '#';}
-.hasAnchor:hover a.anchor-section {visibility: visible;}
-</style>
-<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
-document.addEventListener('DOMContentLoaded', function() {
-  // Do nothing if AnchorJS is used
-  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
-    return;
-  }
-
-  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-
-  // Do nothing if sections are already anchored
-  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
-    return null;
-  }
-
-  // Use section id when pandoc runs with --section-divs
-  const section_id = function(x) {
-    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
-            ? x.id : '');
-  };
-
-  // Add anchors
-  h.forEach(function(x) {
-    const id = x.id || section_id(x.parentElement);
-    if (id === '') {
-      return null;
-    }
-    let anchor = document.createElement('a');
-    anchor.href = '#' + id;
-    anchor.classList = ['anchor-section'];
-    x.classList.add('hasAnchor');
-    x.appendChild(anchor);
-  });
-});
-</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -80,7 +41,14 @@ document.addEventListener('DOMContentLoaded', function() {
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -168,6 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
+
 
 
 
@@ -402,10 +371,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb2-4"><a href="#cb2-4"></a>test &lt;-<span class="st"> </span>df[<span class="op">-</span>train_split_idx, ]</span>
 <span id="cb2-5"><a href="#cb2-5"></a><span class="kw">str</span>(train)</span>
 <span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; &#39;data.frame&#39;:    114 obs. of  5 variables:</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt;  $ Sepal.Length: num  4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 4.8 ...</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;  $ Sepal.Width : num  3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.4 ...</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt;  $ Petal.Length: num  1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 1.6 ...</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt;  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 0.2 ...</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt;  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 4.9 5.4 4.8 ...</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.1 3.7 3.4 ...</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt;  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.5 1.6 ...</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt;  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.1 0.2 0.2 ...</span></span>
 <span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt;  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</span></span></code></pre></div>
 <p>This now creates a 75% training set for training the ML model and we are going to use the remaining 25% as validation data to test the model.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>rf_model &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">train</span>(Species <span class="op">~</span><span class="st"> </span>.,</span>
@@ -426,9 +395,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt; Resampling results across tuning parameters:</span></span>
 <span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt; </span></span>
 <span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt;   mtry  Accuracy   Kappa    </span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt;   2     0.9513405  0.9260745</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt;   3     0.9542633  0.9304705</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt;   4     0.9530298  0.9286184</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt;   2     0.9548258  0.9314646</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt;   3     0.9570141  0.9347392</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt;   4     0.9568954  0.9345758</span></span>
 <span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt; </span></span>
 <span id="cb3-23"><a href="#cb3-23"></a><span class="co">#&gt; Accuracy was used to select the optimal model using the largest value.</span></span>
 <span id="cb3-24"><a href="#cb3-24"></a><span class="co">#&gt; The final value used for the model was mtry = 3.</span></span></code></pre></div>
@@ -484,96 +453,97 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h3>Example</h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Implementing function to collapse data</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="kw">library</span>(ConfusionTableR)</span>
-<span id="cb5-3"><a href="#cb5-3"></a>mc_df &lt;-<span class="st"> </span>ConfusionTableR<span class="op">::</span><span class="kw">multi_class_cm</span>(predictions<span class="op">$</span>train_preds, predictions<span class="op">$</span>test.Species)</span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># Access the reduced data for storage in databases</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="kw">print</span>(mc_df<span class="op">$</span>record_level_cm)</span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt;   setosa : setosa setosa : versicolor setosa : virginica versicolor : setosa</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; 1              12                   0                  0                   0</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;   versicolor : versicolor versicolor : virginica virginica : setosa</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; 1                      12                      0                  0</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt;   virginica : versicolor virginica : virginica Accuracy Kappa AccuracyLower</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt; 1                      0                    12        1     1     0.9026062</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt;   AccuracyUpper AccuracyNull AccuracyPValue McnemarPValue setosa : Sensitivity</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; 1             1    0.3333333   6.662463e-18           NaN                    1</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt;   setosa : Specificity setosa : Pos Pred Value setosa : Neg Pred Value</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt; 1                    1                       1                       1</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt;   setosa : Precision setosa : Recall setosa : F1 setosa : Prevalence</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; 1                  1               1           1           0.3333333</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt;   setosa : Detection Rate setosa : Detection Prevalence</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; 1               0.3333333                     0.3333333</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt;   setosa : Balanced Accuracy versicolor : Sensitivity versicolor : Specificity</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#&gt; 1                          1                        1                        1</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#&gt;   versicolor : Pos Pred Value versicolor : Neg Pred Value</span></span>
-<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#&gt; 1                           1                           1</span></span>
-<span id="cb5-24"><a href="#cb5-24"></a><span class="co">#&gt;   versicolor : Precision versicolor : Recall versicolor : F1</span></span>
-<span id="cb5-25"><a href="#cb5-25"></a><span class="co">#&gt; 1                      1                   1               1</span></span>
-<span id="cb5-26"><a href="#cb5-26"></a><span class="co">#&gt;   versicolor : Prevalence versicolor : Detection Rate</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a><span class="co">#&gt; 1               0.3333333                   0.3333333</span></span>
-<span id="cb5-28"><a href="#cb5-28"></a><span class="co">#&gt;   versicolor : Detection Prevalence versicolor : Balanced Accuracy</span></span>
-<span id="cb5-29"><a href="#cb5-29"></a><span class="co">#&gt; 1                         0.3333333                              1</span></span>
-<span id="cb5-30"><a href="#cb5-30"></a><span class="co">#&gt;   virginica : Sensitivity virginica : Specificity virginica : Pos Pred Value</span></span>
-<span id="cb5-31"><a href="#cb5-31"></a><span class="co">#&gt; 1                       1                       1                          1</span></span>
-<span id="cb5-32"><a href="#cb5-32"></a><span class="co">#&gt;   virginica : Neg Pred Value virginica : Precision virginica : Recall</span></span>
-<span id="cb5-33"><a href="#cb5-33"></a><span class="co">#&gt; 1                          1                     1                  1</span></span>
-<span id="cb5-34"><a href="#cb5-34"></a><span class="co">#&gt;   virginica : F1 virginica : Prevalence virginica : Detection Rate</span></span>
-<span id="cb5-35"><a href="#cb5-35"></a><span class="co">#&gt; 1              1              0.3333333                  0.3333333</span></span>
-<span id="cb5-36"><a href="#cb5-36"></a><span class="co">#&gt;   virginica : Detection Prevalence virginica : Balanced Accuracy</span></span>
-<span id="cb5-37"><a href="#cb5-37"></a><span class="co">#&gt; 1                        0.3333333                             1</span></span>
-<span id="cb5-38"><a href="#cb5-38"></a><span class="co">#&gt;                 cm_ts</span></span>
-<span id="cb5-39"><a href="#cb5-39"></a><span class="co">#&gt; 1 2021-11-01 11:37:40</span></span>
-<span id="cb5-40"><a href="#cb5-40"></a><span class="kw">glimpse</span>(mc_df<span class="op">$</span>record_level_cm)</span>
-<span id="cb5-41"><a href="#cb5-41"></a><span class="co">#&gt; Rows: 1</span></span>
-<span id="cb5-42"><a href="#cb5-42"></a><span class="co">#&gt; Columns: 50</span></span>
-<span id="cb5-43"><a href="#cb5-43"></a><span class="co">#&gt; $ `setosa : setosa`                   &lt;int&gt; 12</span></span>
-<span id="cb5-44"><a href="#cb5-44"></a><span class="co">#&gt; $ `setosa : versicolor`               &lt;int&gt; 0</span></span>
-<span id="cb5-45"><a href="#cb5-45"></a><span class="co">#&gt; $ `setosa : virginica`                &lt;int&gt; 0</span></span>
-<span id="cb5-46"><a href="#cb5-46"></a><span class="co">#&gt; $ `versicolor : setosa`               &lt;int&gt; 0</span></span>
-<span id="cb5-47"><a href="#cb5-47"></a><span class="co">#&gt; $ `versicolor : versicolor`           &lt;int&gt; 12</span></span>
-<span id="cb5-48"><a href="#cb5-48"></a><span class="co">#&gt; $ `versicolor : virginica`            &lt;int&gt; 0</span></span>
-<span id="cb5-49"><a href="#cb5-49"></a><span class="co">#&gt; $ `virginica : setosa`                &lt;int&gt; 0</span></span>
-<span id="cb5-50"><a href="#cb5-50"></a><span class="co">#&gt; $ `virginica : versicolor`            &lt;int&gt; 0</span></span>
-<span id="cb5-51"><a href="#cb5-51"></a><span class="co">#&gt; $ `virginica : virginica`             &lt;int&gt; 12</span></span>
-<span id="cb5-52"><a href="#cb5-52"></a><span class="co">#&gt; $ Accuracy                            &lt;dbl&gt; 1</span></span>
-<span id="cb5-53"><a href="#cb5-53"></a><span class="co">#&gt; $ Kappa                               &lt;dbl&gt; 1</span></span>
-<span id="cb5-54"><a href="#cb5-54"></a><span class="co">#&gt; $ AccuracyLower                       &lt;dbl&gt; 0.9026062</span></span>
-<span id="cb5-55"><a href="#cb5-55"></a><span class="co">#&gt; $ AccuracyUpper                       &lt;dbl&gt; 1</span></span>
-<span id="cb5-56"><a href="#cb5-56"></a><span class="co">#&gt; $ AccuracyNull                        &lt;dbl&gt; 0.3333333</span></span>
-<span id="cb5-57"><a href="#cb5-57"></a><span class="co">#&gt; $ AccuracyPValue                      &lt;dbl&gt; 6.662463e-18</span></span>
-<span id="cb5-58"><a href="#cb5-58"></a><span class="co">#&gt; $ McnemarPValue                       &lt;dbl&gt; NaN</span></span>
-<span id="cb5-59"><a href="#cb5-59"></a><span class="co">#&gt; $ `setosa : Sensitivity`              &lt;dbl&gt; 1</span></span>
-<span id="cb5-60"><a href="#cb5-60"></a><span class="co">#&gt; $ `setosa : Specificity`              &lt;dbl&gt; 1</span></span>
-<span id="cb5-61"><a href="#cb5-61"></a><span class="co">#&gt; $ `setosa : Pos Pred Value`           &lt;dbl&gt; 1</span></span>
-<span id="cb5-62"><a href="#cb5-62"></a><span class="co">#&gt; $ `setosa : Neg Pred Value`           &lt;dbl&gt; 1</span></span>
-<span id="cb5-63"><a href="#cb5-63"></a><span class="co">#&gt; $ `setosa : Precision`                &lt;dbl&gt; 1</span></span>
-<span id="cb5-64"><a href="#cb5-64"></a><span class="co">#&gt; $ `setosa : Recall`                   &lt;dbl&gt; 1</span></span>
-<span id="cb5-65"><a href="#cb5-65"></a><span class="co">#&gt; $ `setosa : F1`                       &lt;dbl&gt; 1</span></span>
-<span id="cb5-66"><a href="#cb5-66"></a><span class="co">#&gt; $ `setosa : Prevalence`               &lt;dbl&gt; 0.3333333</span></span>
-<span id="cb5-67"><a href="#cb5-67"></a><span class="co">#&gt; $ `setosa : Detection Rate`           &lt;dbl&gt; 0.3333333</span></span>
-<span id="cb5-68"><a href="#cb5-68"></a><span class="co">#&gt; $ `setosa : Detection Prevalence`     &lt;dbl&gt; 0.3333333</span></span>
-<span id="cb5-69"><a href="#cb5-69"></a><span class="co">#&gt; $ `setosa : Balanced Accuracy`        &lt;dbl&gt; 1</span></span>
-<span id="cb5-70"><a href="#cb5-70"></a><span class="co">#&gt; $ `versicolor : Sensitivity`          &lt;dbl&gt; 1</span></span>
-<span id="cb5-71"><a href="#cb5-71"></a><span class="co">#&gt; $ `versicolor : Specificity`          &lt;dbl&gt; 1</span></span>
-<span id="cb5-72"><a href="#cb5-72"></a><span class="co">#&gt; $ `versicolor : Pos Pred Value`       &lt;dbl&gt; 1</span></span>
-<span id="cb5-73"><a href="#cb5-73"></a><span class="co">#&gt; $ `versicolor : Neg Pred Value`       &lt;dbl&gt; 1</span></span>
-<span id="cb5-74"><a href="#cb5-74"></a><span class="co">#&gt; $ `versicolor : Precision`            &lt;dbl&gt; 1</span></span>
-<span id="cb5-75"><a href="#cb5-75"></a><span class="co">#&gt; $ `versicolor : Recall`               &lt;dbl&gt; 1</span></span>
-<span id="cb5-76"><a href="#cb5-76"></a><span class="co">#&gt; $ `versicolor : F1`                   &lt;dbl&gt; 1</span></span>
-<span id="cb5-77"><a href="#cb5-77"></a><span class="co">#&gt; $ `versicolor : Prevalence`           &lt;dbl&gt; 0.3333333</span></span>
-<span id="cb5-78"><a href="#cb5-78"></a><span class="co">#&gt; $ `versicolor : Detection Rate`       &lt;dbl&gt; 0.3333333</span></span>
-<span id="cb5-79"><a href="#cb5-79"></a><span class="co">#&gt; $ `versicolor : Detection Prevalence` &lt;dbl&gt; 0.3333333</span></span>
-<span id="cb5-80"><a href="#cb5-80"></a><span class="co">#&gt; $ `versicolor : Balanced Accuracy`    &lt;dbl&gt; 1</span></span>
-<span id="cb5-81"><a href="#cb5-81"></a><span class="co">#&gt; $ `virginica : Sensitivity`           &lt;dbl&gt; 1</span></span>
-<span id="cb5-82"><a href="#cb5-82"></a><span class="co">#&gt; $ `virginica : Specificity`           &lt;dbl&gt; 1</span></span>
-<span id="cb5-83"><a href="#cb5-83"></a><span class="co">#&gt; $ `virginica : Pos Pred Value`        &lt;dbl&gt; 1</span></span>
-<span id="cb5-84"><a href="#cb5-84"></a><span class="co">#&gt; $ `virginica : Neg Pred Value`        &lt;dbl&gt; 1</span></span>
-<span id="cb5-85"><a href="#cb5-85"></a><span class="co">#&gt; $ `virginica : Precision`             &lt;dbl&gt; 1</span></span>
-<span id="cb5-86"><a href="#cb5-86"></a><span class="co">#&gt; $ `virginica : Recall`                &lt;dbl&gt; 1</span></span>
-<span id="cb5-87"><a href="#cb5-87"></a><span class="co">#&gt; $ `virginica : F1`                    &lt;dbl&gt; 1</span></span>
-<span id="cb5-88"><a href="#cb5-88"></a><span class="co">#&gt; $ `virginica : Prevalence`            &lt;dbl&gt; 0.3333333</span></span>
-<span id="cb5-89"><a href="#cb5-89"></a><span class="co">#&gt; $ `virginica : Detection Rate`        &lt;dbl&gt; 0.3333333</span></span>
-<span id="cb5-90"><a href="#cb5-90"></a><span class="co">#&gt; $ `virginica : Detection Prevalence`  &lt;dbl&gt; 0.3333333</span></span>
-<span id="cb5-91"><a href="#cb5-91"></a><span class="co">#&gt; $ `virginica : Balanced Accuracy`     &lt;dbl&gt; 1</span></span>
-<span id="cb5-92"><a href="#cb5-92"></a><span class="co">#&gt; $ cm_ts                               &lt;dttm&gt; 2021-11-01 11:37:40</span></span></code></pre></div>
+<span id="cb5-3"><a href="#cb5-3"></a>mc_df &lt;-<span class="st"> </span>ConfusionTableR<span class="op">::</span><span class="kw">multi_class_cm</span>(predictions<span class="op">$</span>train_preds, predictions<span class="op">$</span>test.Species,</span>
+<span id="cb5-4"><a href="#cb5-4"></a>                                         <span class="dt">mode=</span><span class="st">&quot;everything&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># Access the reduced data for storage in databases</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="kw">print</span>(mc_df<span class="op">$</span>record_level_cm)</span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt;   setosa : setosa setosa : versicolor setosa : virginica versicolor : setosa</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt; 1              12                   0                  0                   0</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;   versicolor : versicolor versicolor : virginica virginica : setosa</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; 1                      12                      0                  0</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;   virginica : versicolor virginica : virginica Accuracy Kappa AccuracyLower</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; 1                      0                    12        1     1     0.9026062</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt;   AccuracyUpper AccuracyNull AccuracyPValue McnemarPValue setosa : Sensitivity</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt; 1             1    0.3333333   6.662463e-18           NaN                    1</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;   setosa : Specificity setosa : Pos Pred Value setosa : Neg Pred Value</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; 1                    1                       1                       1</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt;   setosa : Precision setosa : Recall setosa : F1 setosa : Prevalence</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt; 1                  1               1           1           0.3333333</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt;   setosa : Detection Rate setosa : Detection Prevalence</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt; 1               0.3333333                     0.3333333</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#&gt;   setosa : Balanced Accuracy versicolor : Sensitivity versicolor : Specificity</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#&gt; 1                          1                        1                        1</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#&gt;   versicolor : Pos Pred Value versicolor : Neg Pred Value</span></span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="co">#&gt; 1                           1                           1</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a><span class="co">#&gt;   versicolor : Precision versicolor : Recall versicolor : F1</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="co">#&gt; 1                      1                   1               1</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="co">#&gt;   versicolor : Prevalence versicolor : Detection Rate</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="co">#&gt; 1               0.3333333                   0.3333333</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="co">#&gt;   versicolor : Detection Prevalence versicolor : Balanced Accuracy</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a><span class="co">#&gt; 1                         0.3333333                              1</span></span>
+<span id="cb5-31"><a href="#cb5-31"></a><span class="co">#&gt;   virginica : Sensitivity virginica : Specificity virginica : Pos Pred Value</span></span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="co">#&gt; 1                       1                       1                          1</span></span>
+<span id="cb5-33"><a href="#cb5-33"></a><span class="co">#&gt;   virginica : Neg Pred Value virginica : Precision virginica : Recall</span></span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="co">#&gt; 1                          1                     1                  1</span></span>
+<span id="cb5-35"><a href="#cb5-35"></a><span class="co">#&gt;   virginica : F1 virginica : Prevalence virginica : Detection Rate</span></span>
+<span id="cb5-36"><a href="#cb5-36"></a><span class="co">#&gt; 1              1              0.3333333                  0.3333333</span></span>
+<span id="cb5-37"><a href="#cb5-37"></a><span class="co">#&gt;   virginica : Detection Prevalence virginica : Balanced Accuracy</span></span>
+<span id="cb5-38"><a href="#cb5-38"></a><span class="co">#&gt; 1                        0.3333333                             1</span></span>
+<span id="cb5-39"><a href="#cb5-39"></a><span class="co">#&gt;                 cm_ts</span></span>
+<span id="cb5-40"><a href="#cb5-40"></a><span class="co">#&gt; 1 2021-12-01 16:08:34</span></span>
+<span id="cb5-41"><a href="#cb5-41"></a><span class="kw">glimpse</span>(mc_df<span class="op">$</span>record_level_cm)</span>
+<span id="cb5-42"><a href="#cb5-42"></a><span class="co">#&gt; Rows: 1</span></span>
+<span id="cb5-43"><a href="#cb5-43"></a><span class="co">#&gt; Columns: 50</span></span>
+<span id="cb5-44"><a href="#cb5-44"></a><span class="co">#&gt; $ `setosa : setosa`                   &lt;int&gt; 12</span></span>
+<span id="cb5-45"><a href="#cb5-45"></a><span class="co">#&gt; $ `setosa : versicolor`               &lt;int&gt; 0</span></span>
+<span id="cb5-46"><a href="#cb5-46"></a><span class="co">#&gt; $ `setosa : virginica`                &lt;int&gt; 0</span></span>
+<span id="cb5-47"><a href="#cb5-47"></a><span class="co">#&gt; $ `versicolor : setosa`               &lt;int&gt; 0</span></span>
+<span id="cb5-48"><a href="#cb5-48"></a><span class="co">#&gt; $ `versicolor : versicolor`           &lt;int&gt; 12</span></span>
+<span id="cb5-49"><a href="#cb5-49"></a><span class="co">#&gt; $ `versicolor : virginica`            &lt;int&gt; 0</span></span>
+<span id="cb5-50"><a href="#cb5-50"></a><span class="co">#&gt; $ `virginica : setosa`                &lt;int&gt; 0</span></span>
+<span id="cb5-51"><a href="#cb5-51"></a><span class="co">#&gt; $ `virginica : versicolor`            &lt;int&gt; 0</span></span>
+<span id="cb5-52"><a href="#cb5-52"></a><span class="co">#&gt; $ `virginica : virginica`             &lt;int&gt; 12</span></span>
+<span id="cb5-53"><a href="#cb5-53"></a><span class="co">#&gt; $ Accuracy                            &lt;dbl&gt; 1</span></span>
+<span id="cb5-54"><a href="#cb5-54"></a><span class="co">#&gt; $ Kappa                               &lt;dbl&gt; 1</span></span>
+<span id="cb5-55"><a href="#cb5-55"></a><span class="co">#&gt; $ AccuracyLower                       &lt;dbl&gt; 0.9026062</span></span>
+<span id="cb5-56"><a href="#cb5-56"></a><span class="co">#&gt; $ AccuracyUpper                       &lt;dbl&gt; 1</span></span>
+<span id="cb5-57"><a href="#cb5-57"></a><span class="co">#&gt; $ AccuracyNull                        &lt;dbl&gt; 0.3333333</span></span>
+<span id="cb5-58"><a href="#cb5-58"></a><span class="co">#&gt; $ AccuracyPValue                      &lt;dbl&gt; 6.662463e-18</span></span>
+<span id="cb5-59"><a href="#cb5-59"></a><span class="co">#&gt; $ McnemarPValue                       &lt;dbl&gt; NaN</span></span>
+<span id="cb5-60"><a href="#cb5-60"></a><span class="co">#&gt; $ `setosa : Sensitivity`              &lt;dbl&gt; 1</span></span>
+<span id="cb5-61"><a href="#cb5-61"></a><span class="co">#&gt; $ `setosa : Specificity`              &lt;dbl&gt; 1</span></span>
+<span id="cb5-62"><a href="#cb5-62"></a><span class="co">#&gt; $ `setosa : Pos Pred Value`           &lt;dbl&gt; 1</span></span>
+<span id="cb5-63"><a href="#cb5-63"></a><span class="co">#&gt; $ `setosa : Neg Pred Value`           &lt;dbl&gt; 1</span></span>
+<span id="cb5-64"><a href="#cb5-64"></a><span class="co">#&gt; $ `setosa : Precision`                &lt;dbl&gt; 1</span></span>
+<span id="cb5-65"><a href="#cb5-65"></a><span class="co">#&gt; $ `setosa : Recall`                   &lt;dbl&gt; 1</span></span>
+<span id="cb5-66"><a href="#cb5-66"></a><span class="co">#&gt; $ `setosa : F1`                       &lt;dbl&gt; 1</span></span>
+<span id="cb5-67"><a href="#cb5-67"></a><span class="co">#&gt; $ `setosa : Prevalence`               &lt;dbl&gt; 0.3333333</span></span>
+<span id="cb5-68"><a href="#cb5-68"></a><span class="co">#&gt; $ `setosa : Detection Rate`           &lt;dbl&gt; 0.3333333</span></span>
+<span id="cb5-69"><a href="#cb5-69"></a><span class="co">#&gt; $ `setosa : Detection Prevalence`     &lt;dbl&gt; 0.3333333</span></span>
+<span id="cb5-70"><a href="#cb5-70"></a><span class="co">#&gt; $ `setosa : Balanced Accuracy`        &lt;dbl&gt; 1</span></span>
+<span id="cb5-71"><a href="#cb5-71"></a><span class="co">#&gt; $ `versicolor : Sensitivity`          &lt;dbl&gt; 1</span></span>
+<span id="cb5-72"><a href="#cb5-72"></a><span class="co">#&gt; $ `versicolor : Specificity`          &lt;dbl&gt; 1</span></span>
+<span id="cb5-73"><a href="#cb5-73"></a><span class="co">#&gt; $ `versicolor : Pos Pred Value`       &lt;dbl&gt; 1</span></span>
+<span id="cb5-74"><a href="#cb5-74"></a><span class="co">#&gt; $ `versicolor : Neg Pred Value`       &lt;dbl&gt; 1</span></span>
+<span id="cb5-75"><a href="#cb5-75"></a><span class="co">#&gt; $ `versicolor : Precision`            &lt;dbl&gt; 1</span></span>
+<span id="cb5-76"><a href="#cb5-76"></a><span class="co">#&gt; $ `versicolor : Recall`               &lt;dbl&gt; 1</span></span>
+<span id="cb5-77"><a href="#cb5-77"></a><span class="co">#&gt; $ `versicolor : F1`                   &lt;dbl&gt; 1</span></span>
+<span id="cb5-78"><a href="#cb5-78"></a><span class="co">#&gt; $ `versicolor : Prevalence`           &lt;dbl&gt; 0.3333333</span></span>
+<span id="cb5-79"><a href="#cb5-79"></a><span class="co">#&gt; $ `versicolor : Detection Rate`       &lt;dbl&gt; 0.3333333</span></span>
+<span id="cb5-80"><a href="#cb5-80"></a><span class="co">#&gt; $ `versicolor : Detection Prevalence` &lt;dbl&gt; 0.3333333</span></span>
+<span id="cb5-81"><a href="#cb5-81"></a><span class="co">#&gt; $ `versicolor : Balanced Accuracy`    &lt;dbl&gt; 1</span></span>
+<span id="cb5-82"><a href="#cb5-82"></a><span class="co">#&gt; $ `virginica : Sensitivity`           &lt;dbl&gt; 1</span></span>
+<span id="cb5-83"><a href="#cb5-83"></a><span class="co">#&gt; $ `virginica : Specificity`           &lt;dbl&gt; 1</span></span>
+<span id="cb5-84"><a href="#cb5-84"></a><span class="co">#&gt; $ `virginica : Pos Pred Value`        &lt;dbl&gt; 1</span></span>
+<span id="cb5-85"><a href="#cb5-85"></a><span class="co">#&gt; $ `virginica : Neg Pred Value`        &lt;dbl&gt; 1</span></span>
+<span id="cb5-86"><a href="#cb5-86"></a><span class="co">#&gt; $ `virginica : Precision`             &lt;dbl&gt; 1</span></span>
+<span id="cb5-87"><a href="#cb5-87"></a><span class="co">#&gt; $ `virginica : Recall`                &lt;dbl&gt; 1</span></span>
+<span id="cb5-88"><a href="#cb5-88"></a><span class="co">#&gt; $ `virginica : F1`                    &lt;dbl&gt; 1</span></span>
+<span id="cb5-89"><a href="#cb5-89"></a><span class="co">#&gt; $ `virginica : Prevalence`            &lt;dbl&gt; 0.3333333</span></span>
+<span id="cb5-90"><a href="#cb5-90"></a><span class="co">#&gt; $ `virginica : Detection Rate`        &lt;dbl&gt; 0.3333333</span></span>
+<span id="cb5-91"><a href="#cb5-91"></a><span class="co">#&gt; $ `virginica : Detection Prevalence`  &lt;dbl&gt; 0.3333333</span></span>
+<span id="cb5-92"><a href="#cb5-92"></a><span class="co">#&gt; $ `virginica : Balanced Accuracy`     &lt;dbl&gt; 1</span></span>
+<span id="cb5-93"><a href="#cb5-93"></a><span class="co">#&gt; $ cm_ts                               &lt;dttm&gt; 2021-12-01 16:08:34</span></span></code></pre></div>
 <p>This stores a list item. Here you can retrieve:</p>
 <ul>
 <li>the confusion matrix, as this is generated automatically and does not require one to be fit beforehand, as in the previous example</li>
@@ -609,10 +579,13 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb6-25"><a href="#cb6-25"></a><span class="co">#&gt; Specificity                 1.0000            1.0000           1.0000</span></span>
 <span id="cb6-26"><a href="#cb6-26"></a><span class="co">#&gt; Pos Pred Value              1.0000            1.0000           1.0000</span></span>
 <span id="cb6-27"><a href="#cb6-27"></a><span class="co">#&gt; Neg Pred Value              1.0000            1.0000           1.0000</span></span>
-<span id="cb6-28"><a href="#cb6-28"></a><span class="co">#&gt; Prevalence                  0.3333            0.3333           0.3333</span></span>
-<span id="cb6-29"><a href="#cb6-29"></a><span class="co">#&gt; Detection Rate              0.3333            0.3333           0.3333</span></span>
-<span id="cb6-30"><a href="#cb6-30"></a><span class="co">#&gt; Detection Prevalence        0.3333            0.3333           0.3333</span></span>
-<span id="cb6-31"><a href="#cb6-31"></a><span class="co">#&gt; Balanced Accuracy           1.0000            1.0000           1.0000</span></span></code></pre></div>
+<span id="cb6-28"><a href="#cb6-28"></a><span class="co">#&gt; Precision                   1.0000            1.0000           1.0000</span></span>
+<span id="cb6-29"><a href="#cb6-29"></a><span class="co">#&gt; Recall                      1.0000            1.0000           1.0000</span></span>
+<span id="cb6-30"><a href="#cb6-30"></a><span class="co">#&gt; F1                          1.0000            1.0000           1.0000</span></span>
+<span id="cb6-31"><a href="#cb6-31"></a><span class="co">#&gt; Prevalence                  0.3333            0.3333           0.3333</span></span>
+<span id="cb6-32"><a href="#cb6-32"></a><span class="co">#&gt; Detection Rate              0.3333            0.3333           0.3333</span></span>
+<span id="cb6-33"><a href="#cb6-33"></a><span class="co">#&gt; Detection Prevalence        0.3333            0.3333           0.3333</span></span>
+<span id="cb6-34"><a href="#cb6-34"></a><span class="co">#&gt; Balanced Accuracy           1.0000            1.0000           1.0000</span></span></code></pre></div>
 <p>To get the confusion matrix table:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>mc_df<span class="op">$</span>cm_tbl</span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="co">#&gt;             Reference</span></span>
@@ -665,41 +638,41 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb10-2"><a href="#cb10-2"></a><span class="co"># Get the record level data</span></span>
 <span id="cb10-3"><a href="#cb10-3"></a>bin_cm<span class="op">$</span>record_level_cm</span>
 <span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt;   Pred_benign_Ref_benign Pred_malignant_Ref_benign Pred_benign_Ref_malignant</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt; 1                    108                         3                         1</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt; 1                    107                         4                         4</span></span>
 <span id="cb10-6"><a href="#cb10-6"></a><span class="co">#&gt;   Pred_malignant_Ref_malignant  Accuracy     Kappa AccuracyLower AccuracyUpper</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="co">#&gt; 1                           58 0.9764706 0.9484927     0.9408536     0.9935527</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co">#&gt; 1                           55 0.9529412 0.8961674     0.9093833     0.9794673</span></span>
 <span id="cb10-8"><a href="#cb10-8"></a><span class="co">#&gt;   AccuracyNull AccuracyPValue McnemarPValue Sensitivity Specificity</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; 1    0.6529412    9.47635e-26     0.6170751    0.972973   0.9830508</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt;   Pos.Pred.Value Neg.Pred.Value Precision   Recall        F1 Prevalence</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt; 1      0.9908257      0.9508197 0.9908257 0.972973 0.9818182  0.6529412</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; 1    0.6529412   3.465716e-21             1    0.963964   0.9322034</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt;   Pos.Pred.Value Neg.Pred.Value Precision   Recall       F1 Prevalence</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt; 1       0.963964      0.9322034  0.963964 0.963964 0.963964  0.6529412</span></span>
 <span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt;   Detection.Rate Detection.Prevalence Balanced.Accuracy               cm_ts</span></span>
-<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; 1      0.6352941            0.6411765         0.9780119 2021-11-01 11:37:53</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; 1      0.6294118            0.6529412         0.9480837 2021-12-01 16:08:47</span></span>
 <span id="cb10-14"><a href="#cb10-14"></a><span class="kw">glimpse</span>(bin_cm<span class="op">$</span>record_level_cm)</span>
 <span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt; Rows: 1</span></span>
 <span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; Columns: 23</span></span>
-<span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt; $ Pred_benign_Ref_benign       &lt;int&gt; 108</span></span>
-<span id="cb10-18"><a href="#cb10-18"></a><span class="co">#&gt; $ Pred_malignant_Ref_benign    &lt;int&gt; 3</span></span>
-<span id="cb10-19"><a href="#cb10-19"></a><span class="co">#&gt; $ Pred_benign_Ref_malignant    &lt;int&gt; 1</span></span>
-<span id="cb10-20"><a href="#cb10-20"></a><span class="co">#&gt; $ Pred_malignant_Ref_malignant &lt;int&gt; 58</span></span>
-<span id="cb10-21"><a href="#cb10-21"></a><span class="co">#&gt; $ Accuracy                     &lt;dbl&gt; 0.9764706</span></span>
-<span id="cb10-22"><a href="#cb10-22"></a><span class="co">#&gt; $ Kappa                        &lt;dbl&gt; 0.9484927</span></span>
-<span id="cb10-23"><a href="#cb10-23"></a><span class="co">#&gt; $ AccuracyLower                &lt;dbl&gt; 0.9408536</span></span>
-<span id="cb10-24"><a href="#cb10-24"></a><span class="co">#&gt; $ AccuracyUpper                &lt;dbl&gt; 0.9935527</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt; $ Pred_benign_Ref_benign       &lt;int&gt; 107</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="co">#&gt; $ Pred_malignant_Ref_benign    &lt;int&gt; 4</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a><span class="co">#&gt; $ Pred_benign_Ref_malignant    &lt;int&gt; 4</span></span>
+<span id="cb10-20"><a href="#cb10-20"></a><span class="co">#&gt; $ Pred_malignant_Ref_malignant &lt;int&gt; 55</span></span>
+<span id="cb10-21"><a href="#cb10-21"></a><span class="co">#&gt; $ Accuracy                     &lt;dbl&gt; 0.9529412</span></span>
+<span id="cb10-22"><a href="#cb10-22"></a><span class="co">#&gt; $ Kappa                        &lt;dbl&gt; 0.8961674</span></span>
+<span id="cb10-23"><a href="#cb10-23"></a><span class="co">#&gt; $ AccuracyLower                &lt;dbl&gt; 0.9093833</span></span>
+<span id="cb10-24"><a href="#cb10-24"></a><span class="co">#&gt; $ AccuracyUpper                &lt;dbl&gt; 0.9794673</span></span>
 <span id="cb10-25"><a href="#cb10-25"></a><span class="co">#&gt; $ AccuracyNull                 &lt;dbl&gt; 0.6529412</span></span>
-<span id="cb10-26"><a href="#cb10-26"></a><span class="co">#&gt; $ AccuracyPValue               &lt;dbl&gt; 9.47635e-26</span></span>
-<span id="cb10-27"><a href="#cb10-27"></a><span class="co">#&gt; $ McnemarPValue                &lt;dbl&gt; 0.6170751</span></span>
-<span id="cb10-28"><a href="#cb10-28"></a><span class="co">#&gt; $ Sensitivity                  &lt;dbl&gt; 0.972973</span></span>
-<span id="cb10-29"><a href="#cb10-29"></a><span class="co">#&gt; $ Specificity                  &lt;dbl&gt; 0.9830508</span></span>
-<span id="cb10-30"><a href="#cb10-30"></a><span class="co">#&gt; $ Pos.Pred.Value               &lt;dbl&gt; 0.9908257</span></span>
-<span id="cb10-31"><a href="#cb10-31"></a><span class="co">#&gt; $ Neg.Pred.Value               &lt;dbl&gt; 0.9508197</span></span>
-<span id="cb10-32"><a href="#cb10-32"></a><span class="co">#&gt; $ Precision                    &lt;dbl&gt; 0.9908257</span></span>
-<span id="cb10-33"><a href="#cb10-33"></a><span class="co">#&gt; $ Recall                       &lt;dbl&gt; 0.972973</span></span>
-<span id="cb10-34"><a href="#cb10-34"></a><span class="co">#&gt; $ F1                           &lt;dbl&gt; 0.9818182</span></span>
+<span id="cb10-26"><a href="#cb10-26"></a><span class="co">#&gt; $ AccuracyPValue               &lt;dbl&gt; 3.465716e-21</span></span>
+<span id="cb10-27"><a href="#cb10-27"></a><span class="co">#&gt; $ McnemarPValue                &lt;dbl&gt; 1</span></span>
+<span id="cb10-28"><a href="#cb10-28"></a><span class="co">#&gt; $ Sensitivity                  &lt;dbl&gt; 0.963964</span></span>
+<span id="cb10-29"><a href="#cb10-29"></a><span class="co">#&gt; $ Specificity                  &lt;dbl&gt; 0.9322034</span></span>
+<span id="cb10-30"><a href="#cb10-30"></a><span class="co">#&gt; $ Pos.Pred.Value               &lt;dbl&gt; 0.963964</span></span>
+<span id="cb10-31"><a href="#cb10-31"></a><span class="co">#&gt; $ Neg.Pred.Value               &lt;dbl&gt; 0.9322034</span></span>
+<span id="cb10-32"><a href="#cb10-32"></a><span class="co">#&gt; $ Precision                    &lt;dbl&gt; 0.963964</span></span>
+<span id="cb10-33"><a href="#cb10-33"></a><span class="co">#&gt; $ Recall                       &lt;dbl&gt; 0.963964</span></span>
+<span id="cb10-34"><a href="#cb10-34"></a><span class="co">#&gt; $ F1                           &lt;dbl&gt; 0.963964</span></span>
 <span id="cb10-35"><a href="#cb10-35"></a><span class="co">#&gt; $ Prevalence                   &lt;dbl&gt; 0.6529412</span></span>
-<span id="cb10-36"><a href="#cb10-36"></a><span class="co">#&gt; $ Detection.Rate               &lt;dbl&gt; 0.6352941</span></span>
-<span id="cb10-37"><a href="#cb10-37"></a><span class="co">#&gt; $ Detection.Prevalence         &lt;dbl&gt; 0.6411765</span></span>
-<span id="cb10-38"><a href="#cb10-38"></a><span class="co">#&gt; $ Balanced.Accuracy            &lt;dbl&gt; 0.9780119</span></span>
-<span id="cb10-39"><a href="#cb10-39"></a><span class="co">#&gt; $ cm_ts                        &lt;dttm&gt; 2021-11-01 11:37:53</span></span></code></pre></div>
+<span id="cb10-36"><a href="#cb10-36"></a><span class="co">#&gt; $ Detection.Rate               &lt;dbl&gt; 0.6294118</span></span>
+<span id="cb10-37"><a href="#cb10-37"></a><span class="co">#&gt; $ Detection.Prevalence         &lt;dbl&gt; 0.6529412</span></span>
+<span id="cb10-38"><a href="#cb10-38"></a><span class="co">#&gt; $ Balanced.Accuracy            &lt;dbl&gt; 0.9480837</span></span>
+<span id="cb10-39"><a href="#cb10-39"></a><span class="co">#&gt; $ cm_ts                        &lt;dttm&gt; 2021-12-01 16:08:47</span></span></code></pre></div>
 <p>This is now in a data.frame class and can be used and saved as a single record to a database server to monitor confusion matrix performance over time.</p>
 </div>
 </div>
@@ -715,7 +688,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb11-7"><a href="#cb11-7"></a>                                   <span class="dt">quadrant_col2 =</span> <span class="st">&quot;#4397D2&quot;</span>, </span>
 <span id="cb11-8"><a href="#cb11-8"></a>                                   <span class="dt">custom_title =</span> <span class="st">&quot;Breast Cancer Confusion Matrix&quot;</span>, </span>
 <span id="cb11-9"><a href="#cb11-9"></a>                                   <span class="dt">text_col=</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>These can be used in combination with the outputs from the CARET package to build up the analysis of how well the model fits and how well it will fit in the future, from the analysis of Cohen’s Kappa value and other associated metrics.</p>
 </div>
 <div id="wrapping-up" class="section level2">

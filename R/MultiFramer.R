@@ -1,7 +1,8 @@
 #' @title Multiple Confusion Matrix data frame
-#' @description a confusion matrix object for multi classification machine learning problems.
+#' @description a confusion matrix object for multiple outcome classification machine learning problems.
 #' @param train_labels the classification labels from the training set
 #' @param truth_labels the testing set ground truth labels for comparison
+#' @param ... function forwarding for passing mode and other parameters to `caret` confusionMatrix
 #' @return A list containing the outputs highlighted hereunder:
 #' \itemize{
 #' \item{\strong{"confusion_matrix"}}{ a confusion matrix list item with all the associated confusion matrix statistics}
@@ -40,9 +41,9 @@
 #' @export
 
 
-multi_class_cm <- function(train_labels, truth_labels){
+multi_class_cm <- function(train_labels, truth_labels, ...){
 
-  cm <- caret::confusionMatrix(train_labels, truth_labels)
+  cm <- caret::confusionMatrix(train_labels, truth_labels, ...)
   cm_table <- cm$table
   class_labels <- as.character(colnames(cm$table))
   dvs <- length(class_labels)

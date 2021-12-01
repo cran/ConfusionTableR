@@ -13,6 +13,7 @@
 #' @param round_dig rounding options
 #' @param cm_stat_size the cex size of the statistics box label
 #' @param cm_stat_lbl_size the cex size of the label in the statistics box
+#' @param ... function forwarding to the confusion matrix object to pass additional args, such as positive = "Class label"
 #' @return returns a visual of a Confusion Matrix output
 #' @importFrom caret confusionMatrix createDataPartition
 #' @importFrom graphics par rect text layout title plot
@@ -43,8 +44,7 @@
 #' preds <- predict(rf_fit, newdata=test, type="raw")
 #' predicted <- cbind(data.frame(class_preds=preds), test)
 #' # Create the visual
-#' ConfusionTableR::binary_visualiseR(predicted$class_preds,
-#' predicted$Class, custom_title="Breast Cancer prediction")
+#' ConfusionTableR::binary_visualiseR(predicted$class_preds, predicted$Class)
 #' @export
 
 
@@ -52,9 +52,10 @@ binary_visualiseR <- function(train_labels,truth_labels, class_label1="Class Neg
                               class_label2="Class Positive", quadrant_col1='#3F97D0',
                               quadrant_col2='#F7AD50', custom_title="Confusion matrix",
                               info_box_title="Confusion matrix statistics",
-                              text_col="black", round_dig=2, cm_stat_size=1.4, cm_stat_lbl_size=1.5){
+                              text_col="black", round_dig=2,
+                              cm_stat_size=1.4, cm_stat_lbl_size=1.5, ...){
 
-  cm <- caret::confusionMatrix(train_labels, truth_labels)
+  cm <- caret::confusionMatrix(train_labels, truth_labels, ...)
   #Define globals
   layout(matrix(c(1,1,2)))
   plot(c(100, 345), c(300, 450), type = "n", xlab="", ylab="", xaxt='n', yaxt='n')
@@ -81,22 +82,24 @@ binary_visualiseR <- function(train_labels,truth_labels, class_label1="Class Neg
 
   #Add in other confusion matrix statistics
   plot(c(100, 0), c(100, 0), type = "n", xlab="", ylab="", main = info_box_title, xaxt='n', yaxt='n')
-  text(10, 85, names(cm$byClass[1]), cex=cm_stat_lbl_size, font=2)
+  text(10, 85, names(cm$byClass[1]), cex=cm_stat_lbl_size, font=1)
   text(10, 70, round(as.numeric(cm$byClass[1]), round_dig), cex=cm_stat_size)
-  text(30, 85, names(cm$byClass[2]), cex=cm_stat_lbl_size, font=2)
+  text(30, 85, names(cm$byClass[2]), cex=cm_stat_lbl_size, font=1)
   text(30, 70, round(as.numeric(cm$byClass[2]), round_dig), cex=cm_stat_size)
-  text(50, 85, names(cm$byClass[5]), cex=cm_stat_lbl_size, font=2)
+  text(50, 85, names(cm$byClass[5]), cex=cm_stat_lbl_size, font=1)
   text(50, 70, round(as.numeric(cm$byClass[5]), round_dig), cex=cm_stat_size)
-  text(65, 85, names(cm$byClass[6]), cex=cm_stat_lbl_size, font=2)
+  text(65, 85, names(cm$byClass[6]), cex=cm_stat_lbl_size, font=1)
   text(65, 70, round(as.numeric(cm$byClass[6]), round_dig), cex=cm_stat_size)
-  text(86, 85, names(cm$byClass['Balanced Accuracy']), cex=1.6, font=2)
+  text(86, 85, names(cm$byClass['Balanced Accuracy']), cex=cm_stat_lbl_size, font=1)
   text(86, 70, round(as.numeric(cm$byClass['Balanced Accuracy']), round_dig), cex=cm_stat_size)
 
+
   # add in the accuracy information
-  text(30, 35, names(cm$overall[1]), cex=cm_stat_lbl_size, font=2)
+  text(30, 35, names(cm$overall[1]), cex=cm_stat_lbl_size, font=1)
   text(30, 20, round(as.numeric(cm$overall[1]), round_dig), cex=cm_stat_size)
-  text(70, 35, names(cm$overall[2]), cex=cm_stat_lbl_size, font=2)
+  text(70, 35, names(cm$overall[2]), cex=cm_stat_lbl_size, font=1)
   text(70, 20, round(as.numeric(cm$overall[2]), round_dig), cex=cm_stat_size)
+
 }
 
 

@@ -4,12 +4,14 @@
 \alias{binary_class_cm}
 \title{Binary Confusion Matrix data frame}
 \usage{
-binary_class_cm(train_labels, truth_labels)
+binary_class_cm(train_labels, truth_labels, ...)
 }
 \arguments{
 \item{train_labels}{the classification labels from the training set}
 
 \item{truth_labels}{the testing set ground truth labels for comparison}
+
+\item{...}{function forwarding for additional `caret` confusion matrix parameters to be passed such as mode="everything" and positive="class label"}
 }
 \value{
 A list containing the outputs highlighted hereunder:
@@ -50,8 +52,8 @@ preds <- predict(rf_fit, newdata=test, type="raw")
 predicted <- cbind(data.frame(class_preds=preds), test)
 
 #ConfusionTableR to produce record level output
-
 cm <- ConfusionTableR::binary_class_cm(predicted$class_preds,predicted$Class)
+# Other modes here are mode="prec_recall", mode="sens_spec" and mode="everything"
 # Record level output
 cm$record_level_cm #Primed for storage in a database table
 # List confusion matrix

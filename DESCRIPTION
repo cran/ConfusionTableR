@@ -1,7 +1,7 @@
 Package: ConfusionTableR
 Type: Package
 Title: Confusion Matrix Toolset
-Version: 1.0.3
+Version: 1.0.4
 Authors@R: c(
           person("Gary", "Hutson", , "hutsons-hacks@outlook.com", 
           c("aut", "cre"), comment = c(ORCID="0000-0003-3534-6143"))
@@ -14,15 +14,16 @@ Description: Takes the outputs of a 'caret' confusion matrix and allows for the 
     Traditionally, this approach has been used for highlighting model representation and feature slippage. 
 License: MIT + file LICENSE
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Imports: dplyr, tidyr, magrittr, caret, purrr, furrr
-Suggests: knitr, rmarkdown, e1071, randomForest, scales, mlbench
+Suggests: knitr, rmarkdown, e1071, randomForest, scales, mlbench,
+        FeatureTerminatoR
 VignetteBuilder: knitr
 NeedsCompilation: no
 Repository: CRAN
 Collate: 'MultiFramer.R' 'SingleFramer.R' 'binaryVisualiseR.R'
         'dummycoder.R' 'globals.R'
 Language: en-US
-Packaged: 2021-11-01 11:37:54 UTC; garyh
+Packaged: 2021-12-01 16:08:49 UTC; garyh
 Author: Gary Hutson [aut, cre] (<https://orcid.org/0000-0003-3534-6143>)
-Date/Publication: 2021-11-01 15:20:05 UTC
+Date/Publication: 2021-12-01 16:30:01 UTC
